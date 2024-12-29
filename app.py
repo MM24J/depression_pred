@@ -43,6 +43,10 @@ for feature in feature_names:
 # Convert user inputs into a DataFrame with feature names
 input_df = pd.DataFrame([user_inputs], columns=feature_names)
 
+# Add a slider for adjusting the risk threshold
+threshold = st.sidebar.slider("Set Risk Threshold", 0.1, 0.5, 0.2, step=0.05)
+
+
 # Predict button
 if st.sidebar.button("Predict"):
     # Scale the input
@@ -51,9 +55,7 @@ if st.sidebar.button("Predict"):
     # Predict probability
     prediction = model.predict_proba(scaled_input)[:, 1][0]
 
-    # Add a slider for adjusting the risk threshold
-    threshold = st.sidebar.slider("Set Risk Threshold", 0.1, 0.5, 0.2, step=0.05)
-
+    
     # Determine risk level based on the threshold
     if prediction > threshold:
         st.write(f"#### Risk Level: High (Threshold: {threshold:.2f})")
